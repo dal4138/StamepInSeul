@@ -66,6 +66,8 @@ public class SearchActivity extends AppCompatActivity {
         edtSearch2 = findViewById(R.id.edtSearch2);
         btnSearch2 = findViewById(R.id.btnSearch2);
 
+        recyclerView = findViewById(R.id.grid_recyclerview);
+
         Intent intent = getIntent();
         String word = intent.getStringExtra("word");
 
@@ -144,17 +146,15 @@ public class SearchActivity extends AppCompatActivity {
                                 }
                                 cursor.moveToFirst();
                                 list.add(themeData);
-
                             }
-
-                            recyclerView.setAdapter(adapter);
 
                         } catch (ClassCastException e1) {
                             e1.printStackTrace();
 
-                            View viewDialog = View.inflate(getApplicationContext(), R.layout.dialog_search_message, null);
+                            View viewDialog = View.inflate(getApplicationContext(), R.layout.dialog_search_message2, null);
 
                             Button btnExit = viewDialog.findViewById(R.id.btnExit);
+
 
                             final Dialog noSearchDlg = new Dialog(SearchActivity.this);
 
@@ -179,7 +179,6 @@ public class SearchActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
 
                     @Override
-
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(),
                                 error.getMessage(), Toast.LENGTH_LONG).show();
@@ -189,13 +188,13 @@ public class SearchActivity extends AppCompatActivity {
 
         queue.add(jsObjRequest);
 
-        recyclerView = findViewById(R.id.grid_recyclerview);
-
         adapter = new SearchAdapter(R.layout.item_theme, SearchActivity.this, list);
 
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setLayoutManager(layoutManager);
+        //어덥테가 밑에 있어야 된다.
+        recyclerView.setAdapter(adapter);
     }
 
 }
